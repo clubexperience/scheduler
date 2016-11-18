@@ -59,16 +59,16 @@
     <script>
         /* global firebase $ */
 
-        var page = window.location.pathname.substring(11).split("/");
+        var page = window.location.pathname.replace("/scheduler/", "").split("/");
         console.log(page);
         if (page[0] === "/event/" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
-            if (page[2].match(/[\/\[\]\\\{\}]/g)) {
+            if (page[1].match(/[\/\[\]\\\{\}]/g)) {
                 window.location.href = "404error.html";
             }
             else {
-                firebase.database().ref("cescheduler/" + page[2] + "/").once('value').then(function(snapshot) {
+                firebase.database().ref("cescheduler/" + page[1] + "/").once('value').then(function(snapshot) {
                     var data = snapshot.val();
-console.log(data);
+                    console.log(data);
                     if (data.open) {
 
                         $(".event-name").html(data.name);
