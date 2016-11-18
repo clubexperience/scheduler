@@ -19,6 +19,7 @@
     <div class="container">
         <div class="col-lg-12">
             <p id="loading" class="hideable">Loading...</p>
+
             <div id="main" class="hideable hidden">
                 <h1>Register for: <span class="event-name">loading...</span></h1>
                 <p class="event-description"></p>
@@ -29,11 +30,12 @@
                     <tbody id="info-body"></tbody>
                 </table>
                 <br>
-                <input type="button" id="attend-full" class="form-control btn-success" value="I can attend the full event.">
+                <button id="attend-full" class="form-control btn-success">I can attend all of the event.</button>
                 <br>
-                <input type="button" id="attend-part" class="form-control btn-primary" value="I can attend part of the event.">
+                <button id="attend-part" class="form-control btn-primary">I can attend part of the event.</button>
                 <br>
-                <input type="button" id="attend-none" class="form-control btn-danger" value="I can not attend the event.">
+                <button id="attend-none" class="form-control btn-danger">I can attend none of the event.</button>
+
             </div>
             <div id="error404" class="hideable hidden">
                 <h1>404 Error: page not found</h1>
@@ -43,6 +45,7 @@
                 <h1>Error: Event Closed</h1>
                 <p>The registration for this event has been closed. If you think this is an error, or would like to request to be added anyways, please contact the event scheduler.</p>
             </div>
+
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -66,8 +69,8 @@
 
         var page = window.location.pathname.replace("/scheduler/", "").split("/");
         console.log(page);
-        
-        
+
+
         if (page[0] === "e" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
             console.log(1);
             if (page[1].match(/[\/\[\]\\\{\}]/g)) {
@@ -83,47 +86,42 @@
                         $("#loading").addClass("hidden");
                         $("#error404").removeClass("hidden");
                     }
-                    else {
+                    else if (!data.open) {
+                        $("#loading").addClass("hidden");
+                        $("#closed").removeClass("hidden");
+                    }
+                    else if (data.token[page[2]]) {
                         console.log(data);
-                        if (data.open) {
 
-                            $(".event-name").html(data.name);
-                            $(".event-description").html(data.description);
-                            var info = data.info;
-                            if (info === null) {
-                                $("#info-table").addClass("hidden");
-                                $("#no-info").removeClass("hidden");
-                            }
-                            else {
-                                for (var key in info) {
-                                    // skip loop if the property is from prototype
-                                    if (!info.hasOwnProperty(key)) continue;
 
-                                    var element = info[key];
-                                    $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
-                                }
-                            }
-                            
-                            var current;
-                            for (var i = 0; i < data.inputs.length; i ++) {
-                                current = data.inputs[i];
-                                if (current.type === "button") {
-                                    $("#response").append('<input type="button" class="form-control"></input>')
-                                }
-                            }
-                            $("#loading").addClass("hidden");
-                            $("#main").removeClass("hidden");
-
+                        $(".event-name").html(data.name);
+                        $(".event-description").html(data.description);
+                        var info = data.info;
+                        if (info === null) {
+                            $("#info-table").addClass("hidden");
+                            $("#no-info").removeClass("hidden");
                         }
                         else {
-                            $("#loading").addClass("hidden");
-                            $("#closed").removeClass("hidden");
+                            for (var key in info) {
+                                //property is from prototype
+                                if (!info.hasOwnProperty(key)) continue;
+
+                                var element = info[key];
+                                $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
+                            }
                         }
+
+                        
+                        $("#loading").addClass("hidden");
+                        $("#main").removeClass("hidden");
+
+                    }
+                    else {
+                        $("#loading").addClass("hidden");
+                        $("#error404").removeClass("hidden");
                     }
                 });
-
             }
-
         }
         else {
             console.log(21);
