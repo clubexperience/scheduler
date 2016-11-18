@@ -60,7 +60,7 @@
         /* global firebase $ */
 
         var page = window.location.pathname.substring(1).split("/");
-        console.log("page");
+        console.log(page);
         if (page[0] === "/event/" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
             if (page[2].match(/[\/\[\]\\\{\}]/g)) {
                 window.location.href = "404error.html";
