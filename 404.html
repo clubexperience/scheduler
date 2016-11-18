@@ -21,6 +21,8 @@
 
             <div id="main" class="hideable hidden">
                 <h1>Register for: <span class="event-name">loading...</span></h1>
+                <p class="text-muted">You are registering as <span class=".token-owner-name"></span>.</p>
+                <hr>
                 <p class="event-description"></p>
                 <br>
                 <p><b>More Information:</b></p>
@@ -95,6 +97,7 @@
 
                         $(".event-name").html(data.name);
                         $(".event-description").html(data.description);
+                        $(".token-owner-name").html(data.tokens[page[2]]);
                         var info = data.info;
                         if (info === null) {
                             $("#info-table").addClass("hidden");
