@@ -4,10 +4,9 @@
 <head>
     <title>Club Experience Scheduler</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
     <style>
         .hidden {
             display: none;
@@ -48,8 +47,8 @@
 
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
     <script>
@@ -67,11 +66,11 @@
     <script>
         /* global firebase $ */
 
-        var page = window.location.pathname.replace("/scheduler/", "").split("/");
+        var page = window.location.pathname.substring(1).split("/");
         console.log(page);
 
 
-        if (page[0] === "e" && page[1] !== null && page[1] !== undefined && page[1] !== "" && page.length >= 2) {
+        if (page[0] === "event" && page[1] !== null && page[1] !== undefined && page[1] !== "" && page.length >= 2) {
             console.log(1);
             if (page[1].match(/[\/\[\]\\\{\}]/g) || page[2].match(/[\/\[\]\\\{\}]/g)) {
                 console.log(false);
