@@ -71,9 +71,9 @@
         console.log(page);
 
 
-        if (page[0] === "e" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
+        if (page[0] === "e" && page[1] !== null && page[1] !== undefined && page[1] !== "" && page.length >= 2) {
             console.log(1);
-            if (page[1].match(/[\/\[\]\\\{\}]/g)) {
+            if (page[1].match(/[\/\[\]\\\{\}]/g) || page[2].match(/[\/\[\]\\\{\}]/g)) {
                 console.log(false);
                 $("#loading").addClass("hidden");
                 $("#error404").removeClass("hidden");
@@ -90,7 +90,7 @@
                         $("#loading").addClass("hidden");
                         $("#closed").removeClass("hidden");
                     }
-                    else if (data.token[page[2]]) {
+                    else if (data.tokens[page[2]]) {
                         console.log(data);
 
 
