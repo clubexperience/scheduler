@@ -22,14 +22,18 @@
             <div id="main" class="hideable hidden">
                 <h1>Register for: <span class="event-name">loading...</span></h1>
                 <p class="event-description"></p>
-                <p>More Information:</p>
+                <br>
+                <p><b>More Information:</b></p>
                 <p class="hidden" id="no-info">No additional information was found associated with the event.</p>
                 <table class="table table-hover" id="info-table">
-                    <tbody id="info-body">
-
-                    </tbody>
+                    <tbody id="info-body"></tbody>
                 </table>
-                <p></p>
+                <br>
+                <input type="button" id="attend-full" class="form-control btn-success">I can attend the full event.</input>
+                <br>
+                <input type="button" id="attend-part" class="form-control btn-primary">I can attend part of the event.</input>
+                <br>
+                <input type="button" id="attend-none" class="form-control btn-danger">I can not attend the event.</input>
             </div>
             <div id="error404" class="hideable hidden">
                 <h1>404 Error: page not found</h1>
@@ -97,6 +101,14 @@
 
                                     var element = info[key];
                                     $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
+                                }
+                            }
+                            
+                            var current;
+                            for (var i = 0; i < data.inputs.length; i ++) {
+                                current = data.inputs[i];
+                                if (current.type === "button") {
+                                    $("#response").append('<input type="button" class="form-control"></input>')
                                 }
                             }
                             $("#loading").addClass("hidden");
