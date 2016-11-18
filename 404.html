@@ -21,7 +21,8 @@
             <p id="loading" class="hideable">Loading...</p>
             <div id="main" class="hideable hidden">
                 <h1>Register for: <span class="event-name">loading...</span></h1>
-                <p>Event Information:</p>
+                <p class="event-description"></p>
+                <p>More Information:</p>
                 <p class="hidden" id="no-info">No additional information was found associated with the event.</p>
                 <table class="table table-hover" id="info-table">
                     <tbody id="info-body">
@@ -83,6 +84,7 @@
                         if (data.open) {
 
                             $(".event-name").html(data.name);
+                            $(".event-description").html(data.description);
                             var info = data.info;
                             if (info === null) {
                                 $("#info-table").addClass("hidden");
