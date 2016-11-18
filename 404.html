@@ -59,7 +59,7 @@
     <script>
         /* global firebase $ */
 
-        var page = window.location.pathname.substring(1).split("/");
+        var page = window.location.pathname.substring(11).split("/");
         console.log(page);
         if (page[0] === "/event/" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
             if (page[2].match(/[\/\[\]\\\{\}]/g)) {
