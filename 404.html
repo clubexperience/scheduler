@@ -62,39 +62,50 @@
         var page = window.location.pathname.replace("/scheduler/", "").split("/");
         console.log(page);
         if (page[0] === "/event/" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
+            console.log(1);
             if (page[1].match(/[\/\[\]\\\{\}]/g)) {
-                window.location.href = "404error.html";
+                console.log(false);
+                $("#loading").addClass("hidden");
+                $("#error404").removeClass("hidden");
             }
             else {
+                console.log(2);
                 firebase.database().ref("cescheduler/" + page[1] + "/").once('value').then(function(snapshot) {
                     var data = snapshot.val();
-                    console.log(data);
-                    if (data.open) {
-
-                        $(".event-name").html(data.name);
-                        var info = data.info;
-                        if (info === null) {
-                            $("#info-table").addClass("hidden");
-                            $("#no-info").removeClass("hidden");
-                        }
-                        else {
-                            for (var key in info) {
-                                // skip loop if the property is from prototype
-                                if (!info.hasOwnProperty(key)) continue;
-
-                                var element = info[key];
-                                $("#info-body").append("<th>" + key + "</th><th>" + element + "</th>");
-                            }
-                        }
+                    if (data === null) {
                         $("#loading").addClass("hidden");
-                        $("#main").removeClass("hidden");
-
+                        $("#error404").removeClass("hidden");
                     }
                     else {
-                        $("#loading").addClass("hidden");
-                        $("#closed").removeClass("hidden");
+                        console.log(data);
+                        if (data.open) {
+
+                            $(".event-name").html(data.name);
+                            var info = data.info;
+                            if (info === null) {
+                                $("#info-table").addClass("hidden");
+                                $("#no-info").removeClass("hidden");
+                            }
+                            else {
+                                for (var key in info) {
+                                    // skip loop if the property is from prototype
+                                    if (!info.hasOwnProperty(key)) continue;
+
+                                    var element = info[key];
+                                    $("#info-body").append("<th>" + key + "</th><th>" + element + "</th>");
+                                }
+                            }
+                            $("#loading").addClass("hidden");
+                            $("#main").removeClass("hidden");
+
+                        }
+                        else {
+                            $("#loading").addClass("hidden");
+                            $("#closed").removeClass("hidden");
+                        }
                     }
                 });
+
             }
 
         }
