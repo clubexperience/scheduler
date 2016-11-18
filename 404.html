@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Club Experience Scheduler</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="loading" class="hideable">Loading...</p>
+    <div id="main" class="hideable hidden">
+        <h1>Register for: <span class="event-name">loading...</span></h1>
+        <p>Event Information:</p>
+        <p class="hidden" id="no-info">No additional information was found associated with the event.</p>
+        <table class="table table-hover" id="info-table">
+            <tbody id="info-body">
+
+            </tbody>
+        </table>
+        <p></p>
+    </div>
+    <div id="error404" class="hideable hidden">
+        <h1>404 Error: page not found</h1>
+        <p>The requested page was not found.<br><a href="/">Click here to go to the home page.</a></p>
+    </div>
+    <div id="closed" class="hideable hidden">
+        <h1>Error: Event Closed</h1>
+        <p>The registration for this event has been closed. If you think this is an error, or would like to request to be added anyways, please contact the event scheduler.</p>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script>
+        /* global firebase */
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDSCVcPcMzCXMjGhQvQJfkgnjCFzzewTgA",
+            authDomain: "jmeng.firebaseapp.com",
+            databaseURL: "https://jmeng.firebaseio.com",
+            storageBucket: "project-4679594405675385181.appspot.com",
+            messagingSenderId: "590199481216"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+        /* global firebase $ */
+
+        var page = window.location.pathname.substring(1).split("/");
+        if (page[0] === "/event/" && page[1] !== null && page[1] !== undefined && page[1] !== "") {
+            if (page[2].match(/[\/\[\]\\\{\}]/g)) {
+                window.location.href = "404error.html";
+            }
+            else {
+                firebase.database().ref("cescheduler/" + page[2]).once('value').then(function(snapshot) {
+                    var data = snapshot.val();
+
+                    if (data.open) {
+
+                        $(".event-name").html(data.name);
+                        var info = data.info;
+                        if (info === null) {
+                            $("#info-table").addClass("hidden");
+                            $("#no-info").removeClass("hidden");
+                        }
+                        else {
+                            for (var key in info) {
+                                // skip loop if the property is from prototype
+                                if (!info.hasOwnProperty(key)) continue;
+
+                                var element = info[key];
+                                $("#info-body").append("<th>" + key + "</th><th>" + element + "</th>");
+                            }
+                        }
+                        $("#loading").addClass("hidden");
+                        $("#main").removeClass("hidden");
+
+                    }
+                    else {
+                        $("#loading").addClass("hidden");
+                        $("#closed").removeClass("hidden");
+                    }
+                });
+            }
+
+        }
+        else {
+            $("#loading").addClass("hidden");
+            $("#error404").removeClass("hidden");
+        }
+    </script>
+</body>
+
+</html>
