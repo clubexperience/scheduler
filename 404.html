@@ -94,7 +94,7 @@
                                     if (!info.hasOwnProperty(key)) continue;
 
                                     var element = info[key];
-                                    $("#info-body").append("<th>" + key + "</th><th>" + element + "</th>");
+                                    $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
                                 }
                             }
                             $("#loading").addClass("hidden");
