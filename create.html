@@ -70,7 +70,7 @@
         }
         $("#submit").click(function() {
             if (!allFilled()) {
-                firebase.database().ref("cescheduler").push({
+                firebase.database().ref("/cescheduler/").push({
                     name: $("#title").val(),
                     description: $("#description").val(),
                     info: {
@@ -99,8 +99,6 @@
                     }
                     $("#main").addClass("hidden");
                     $("#tokens").removeClass("hidden");
-                }).catch(function() {
-                    alert("Unknown Error Occured. Please try again.");
                 });
             }
             else {
