@@ -32,11 +32,11 @@
                     <tbody id="info-body"></tbody>
                 </table>
                 <br>
-                <button id="attend-full" class="form-control btn-success">I can attend all of the event.</button>
+                <button id="attend-full" class="btn form-control btn-success">I can attend all of the event.</button>
                 <br>
-                <button id="attend-part" class="form-control btn-primary">I can attend part of the event.</button>
+                <button id="attend-part" class="btn form-control btn-primary">I can attend part of the event.</button>
                 <br>
-                <button id="attend-none" class="form-control btn-danger">I can attend none of the event.</button>
+                <button id="attend-none" class="btn form-control btn-danger">I can attend none of the event.</button>
 
             </div>
             <div id="confirm" class="hideable hidden">
@@ -44,9 +44,9 @@
                 <p>You are confirming that you can attend <span id="portion"></span> of the event.<br><b>This will override all
                 previous confirmations by you for this event.</b></p>
                 <br>
-                <button class="btn-primary form-control" id="confirm-cancel-button">No, Go back</button>
+                <button class="btn btn-primary form-control" id="confirm-cancel-button">No, Go back</button>
                 <hr>
-                <button class="btn-danger form-control" id="confirm-confirm-button">Yes, I am sure</button>
+                <button class="btn btn-danger form-control" id="confirm-confirm-button">Yes, I am sure</button>
 
             </div>
             <div id="error404" class="hideable hidden">
@@ -91,7 +91,7 @@
         function confirm(portion, eventName, tokenName, token) {
             console.log(eventName);
             console.log(tokenName);
-            
+
             firebase.database().ref("cescheduler/" + eventName + "/confirmations/" + tokenName + "/").set({
                 name: token.name,
                 token: tokenName,

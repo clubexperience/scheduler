@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Club Experience Scheduler</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <style>
+        .hidden {
+            display: none;
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-lg-12">
+            <div id="main">
+                <h1>Create Event</h1>
+                <p>All Fields Required</p>
+                <b>Event Title:</b>
+                <input type="text" class="form-control" id="title" placeholder="e.g. 10/11/16 Club Experience Meeting">
+                <b>Event Description:</b>
+                <input type="textarea" class="form-control" id="description" placeholder="e.g. This is just a normal Club Experience Meeting">
+                <b>Event Date:</b>
+                <input type="input" class="form-control" id="date" placeholder="e.g. 10/11/16">
+                <b>Event Time:</b>
+                <input type="input" class="form-control" id="time" placeholder="e.g. 4:00 P.M. to 6:30 P.M.">
+                <b>Event Type:</b>
+                <input type="input" class="form-control" id="type" placeholder="e.g. Standard Meeting">
+
+                <hr>
+                <button class="btn btn-primary" id="submit">Submit</button>
+            </div>
+            <div id="tokens" class="hidden">
+                <p>Access Links:</p>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script>
+        /* global firebase */
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDSCVcPcMzCXMjGhQvQJfkgnjCFzzewTgA",
+            authDomain: "jmeng.firebaseapp.com",
+            databaseURL: "https://jmeng.firebaseio.com",
+            storageBucket: "project-4679594405675385181.appspot.com",
+            messagingSenderId: "590199481216"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+        /* global firebase $ */
+        function allFilled() {
+            return ($("#title").val().replace(" ", "") === "" && $("#title").val().replace(" ", "") === "" &&
+                $("#title").val().replace(" ", "") === "" && $("#title").val().replace(" ", "") === "" &&
+                $("#title").val().replace(" ", "") === "");
+        }
+        $("#submit").click(function() {
+            if (allFilled()) {
+                firebase.database().ref("cescheduler").push({
+                    name: $("#title").val(),
+                    description: $("#description").val(),
+                    info: {
+                        date: $("#date").val(),
+                        time: $("#time").val(),
+                        type: $("#type").val()
+                    },
+                    open: true
+                }).then(function() {
+                    var names = ["Jeffrey", "Ian", "Lucas"];
+                    var keys = {
+                        
+                    };
+                    for (var i = 0; i < names.length; i++) {
+                        var push = firebase.database().ref("cescheduler/tokens/").push({
+                            name: names[i],
+                            registered: false
+                        });
+                        console.log(push.key());
+                        keys[names[i]] = push.key();
+                        
+                    }
+                    console.log(keys);
+                    for (i = 0; i < keys.length; i ++) {
+                        $("#tokens").append("<p><b>" + keys.keys(i) + "</b>:" + keys[i] + ".</p>");
+                    }
+                    $("#main").addClass("hidden");
+                    $("#tokens").removeClass("hidden");
+                }).catch(function() {
+                    alert("Unknown Error Occured. Please try again.");
+                });
+            }
+            else {
+                alert("All fields are required.");
+            }
+        });
+    </script>
+</body>
+
+</html>
