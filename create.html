@@ -99,7 +99,7 @@
                     for (i = 0; i < Object.keys(keys).length; i ++) {
                         console.log(i);
                         console.log(Object.keys(keys)[i]);
-                        console.log(keys[i]);
+                        console.log(keys[Object.keys(keys)[i]]);
                         $("#tokens").append("<p><b>" + Object.keys(keys)[i] + "</b>:" + keys[i] + ".</p>");
                     }
                     $("#main").addClass("hidden");
