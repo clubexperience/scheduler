@@ -22,6 +22,7 @@
             <div id="main" class="hideable hidden">
                 <h1>Register for: <span class="event-name">loading...</span></h1>
                 <p class="text-muted">You are registering as <span class="token-owner-name"></span>.</p>
+                <p id="already-registered"><b>You have already registered for this event. You can change your choice below.</b></p>
                 <hr>
                 <p class="event-description"></p>
                 <br>
@@ -38,12 +39,24 @@
                 <button id="attend-none" class="form-control btn-danger">I can attend none of the event.</button>
 
             </div>
+            <div id="confirm" class="hideable hidden">
+                <h1>Are you sure?</h1>
+                <p>You are confirming that you can attend <span id="portion"></span> of the event.</p>
+                <button class="btn-primary" id="confirm-cancel-button">No, Go back</button>
+                <hr>
+                <button class="btn-danger" id="condirm-confirm-button">Yes, I am sure</button>
+                
+            </div>
             <div id="error404" class="hideable hidden">
                 <h1>404 Error: page not found</h1>
                 <p>The requested page was not found.<br><a href="/scheduler/">Click here to go to the home page.</a></p>
             </div>
-            <div id="closed" class="hideable hidden">
-                <h1>Error: Event Closed</h1>
+            <div id="error" class="hideable hidden">
+                <h1>Unknown Error Occured</h1>
+                <p>Please try again<br><a class="show-main">Click here to go back.</a></p>
+            </div>
+            <div id="reserved" class="hideable hidden">
+                <h1>Success! You have confirmed you can attend <span id="reserved-portion"></span></h1>
                 <p>The registration for this event has been closed. If you think this is an error, or would like to request to be added anyways, please contact the event scheduler.</p>
             </div>
 
@@ -67,7 +80,45 @@
     </script>
     <script>
         /* global firebase $ */
+        $(".show-main").click(function(){
+            $("#error").addClass("hidden");
+            $(".hideable").addClass("hidden");
+            $("#main").removeClass("hidden");
+        });
+        function confirm(portion, tokenName, token) {
+            firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + token + "/").set({
+                    name:token.name,
+                    token:tokenName,
+                    status:portion
+            }).then(function(){
+                $("#loading").addClass("hidden");
+                if (portion === "full") {
+                    $("#reserved-portion").html("all");
+                } else {
+                    $("#reserved-portion").html(portion);
+                }
+                
+                $("#reserved").removeClass("hidden");
+            }).catch(function(){
+                $("#loading").addClass("hidden");
+                $("#error").removeClass("hidden");
+            });
+        }
 
+        function showConfirm(portion, tokenName, token) {
+            $("#confirm").removeClass("hidden");
+            $("#confirm-cancel-button").click(function(){
+                $("#confirm").addClass("hidden");
+                $("#main").removeClass("hidden");
+            });
+            $("#confirm-confirm-button").click(function(){
+                confirm(portion, token);
+                $("#confirm").addClass("hidden");
+                $("#loading").removeClass("hidden");
+                
+            });
+            
+        }
         var page = window.location.pathname.substring(1).split("/");
         console.log(page);
 
@@ -93,11 +144,12 @@
                     }
                     else if (data.tokens[page[2]]) {
                         console.log(data);
-
-
                         $(".event-name").html(data.name);
                         $(".event-description").html(data.description);
-                        $(".token-owner-name").html(data.tokens[page[2]]);
+                        $(".token-owner-name").html(data.tokens[page[2]].name);
+                        if (data.tokens[page[2]].registered) {
+                            $("#already-registered").removeClass("hidden");
+                        }
                         var info = data.info;
                         if (info === null) {
                             $("#info-table").addClass("hidden");
@@ -113,7 +165,16 @@
                             }
                         }
 
-                        
+
+                        $("#attend-full").click(function() {
+                            showConfirm("full", page[2], data.tokens[page[2]]);
+                        });
+                        $("#attend-part").click(function() {
+                            showConfirm("part", page[2], data.tokens[page[2]]);
+                        });
+                        $("#attend-none").click(function() {
+                            showConfirm("none", page[2], data.tokens[page[2]]);
+                        });
                         $("#loading").addClass("hidden");
                         $("#main").removeClass("hidden");
 
