@@ -22,7 +22,7 @@
             <div id="main" class="hideable hidden">
                 <h1>Register for: <span class="event-name">loading...</span></h1>
                 <p class="text-muted">You are registering as <span class="token-owner-name"></span>.</p>
-                <p id="already-registered"><b>You have already registered for this event. You can change your choice below.</b></p>
+                <p id="already-registered" class="hidden"><b>You have already registered for this event. You can change your choice below.</b></p>
                 <hr>
                 <p class="event-description"></p>
                 <br>
@@ -147,7 +147,6 @@
                         $(".event-name").html(data.name);
                         $(".event-description").html(data.description);
                         $(".token-owner-name").html(data.tokens[page[2]].name);
-                        console.log(!!data.tokens[page[2]].registered);
                         if (!!data.tokens[page[2]].registered) {
                             $("#already-registered").removeClass("hidden");
                         }
