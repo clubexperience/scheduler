@@ -83,9 +83,8 @@
                     open: true
                 }).then(function() {
                     var names = ["Jeffrey", "Ian", "Lucas"];
-                    var keys = {
-                        
-                    };
+                    var keys = {};
+                    console.log(key);
                     for (var i = 0; i < names.length; i++) {
                         var push = firebase.database().ref("cescheduler/" + key + "/tokens/").push({
                             name: names[i],
