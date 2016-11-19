@@ -70,7 +70,9 @@
         }
         $("#submit").click(function() {
             if (!allFilled()) {
-                firebase.database().ref("/cescheduler/").push({
+                
+            var key = firebase.database().ref("/cescheduler/").push().key;
+                firebase.database().ref("/cescheduler/" + key).set({
                     name: $("#title").val(),
                     description: $("#description").val(),
                     info: {
@@ -85,7 +87,7 @@
                         
                     };
                     for (var i = 0; i < names.length; i++) {
-                        var push = firebase.database().ref("cescheduler/tokens/").push({
+                        var push = firebase.database().ref("cescheduler/" + key + "/tokens/").push({
                             name: names[i],
                             registered: false
                         });
@@ -94,7 +96,11 @@
                         
                     }
                     console.log(keys);
+                    console.log(keys.length);
                     for (i = 0; i < keys.length; i ++) {
+                        console.log(i);
+                        console.log(keys.keys(i));
+                        console.log(keys[i]);
                         $("#tokens").append("<p><b>" + keys.keys(i) + "</b>:" + keys[i] + ".</p>");
                     }
                     $("#main").addClass("hidden");
