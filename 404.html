@@ -45,8 +45,8 @@
                 <br>
                 <button class="btn-primary form-control" id="confirm-cancel-button">No, Go back</button>
                 <hr>
-                <button class="btn-danger form-control" id="condirm-confirm-button">Yes, I am sure</button>
-                
+                <button class="btn-danger form-control" id="confirm-confirm-button">Yes, I am sure</button>
+
             </div>
             <div id="error404" class="hideable hidden">
                 <h1>404 Error: page not found</h1>
@@ -81,26 +81,28 @@
     </script>
     <script>
         /* global firebase $ */
-        $(".show-main").click(function(){
+        $(".show-main").click(function() {
             $("#error").addClass("hidden");
             $(".hideable").addClass("hidden");
             $("#main").removeClass("hidden");
         });
+
         function confirm(portion, tokenName, token) {
             firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + token + "/").set({
-                    name:token.name,
-                    token:tokenName,
-                    status:portion
-            }).then(function(){
+                name: token.name,
+                token: tokenName,
+                status: portion
+            }).then(function() {
                 $("#loading").addClass("hidden");
                 if (portion === "full") {
                     $("#reserved-portion").html("all");
-                } else {
+                }
+                else {
                     $("#reserved-portion").html(portion);
                 }
-                
+
                 $("#reserved").removeClass("hidden");
-            }).catch(function(){
+            }).catch(function() {
                 $("#loading").addClass("hidden");
                 $("#error").removeClass("hidden");
             });
@@ -109,17 +111,17 @@
         function showConfirm(portion, tokenName, token) {
             $("#main").addClass("hidden");
             $("#confirm").removeClass("hidden");
-            $("#confirm-cancel-button").click(function(){
+            $("#confirm-cancel-button").click(function() {
                 $("#confirm").addClass("hidden");
                 $("#main").removeClass("hidden");
             });
-            $("#confirm-confirm-button").click(function(){
+            $("#confirm-confirm-button").click(function() {
                 confirm(portion, token);
                 $("#confirm").addClass("hidden");
                 $("#loading").removeClass("hidden");
-                
+
             });
-            
+
         }
         var page = window.location.pathname.substring(1).split("/");
         console.log(page);
