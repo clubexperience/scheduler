@@ -64,12 +64,12 @@
     <script>
         /* global firebase $ */
         function allFilled() {
-            return ($("#title").val().replace(" ", "") === "" && $("#title").val().replace(" ", "") === "" &&
-                $("#title").val().replace(" ", "") === "" && $("#title").val().replace(" ", "") === "" &&
-                $("#title").val().replace(" ", "") === "");
+            return ($("#title").val().replace(" ", "") === "" && $("#description").replace(" ", "").val() === "" && 
+            $("#date").replace(" ", "").val() === "" && $("#time").replace(" ", "").val() === "" && 
+            $("#type").replace(" ", "").val() === "");
         }
         $("#submit").click(function() {
-            if (allFilled()) {
+            if (!allFilled()) {
                 firebase.database().ref("cescheduler").push({
                     name: $("#title").val(),
                     description: $("#description").val(),
