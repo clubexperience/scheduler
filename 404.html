@@ -147,6 +147,7 @@
                         $(".event-name").html(data.name);
                         $(".event-description").html(data.description);
                         $(".token-owner-name").html(data.tokens[page[2]].name);
+                        console.log(!!data.tokens[page[2]].registered);
                         if (!!data.tokens[page[2]].registered) {
                             $("#already-registered").removeClass("hidden");
                         }
