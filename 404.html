@@ -88,6 +88,7 @@
         });
 
         function confirm(portion, tokenName, token) {
+            console.log(tokenName);
             firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + token + "/").set({
                 name: token.name,
                 token: tokenName,
@@ -129,7 +130,7 @@
 
         if (page[0] === "event" && page[1] !== null && page[1] !== undefined && page[1] !== "" && page.length >= 2) {
             console.log(1);
-            if (page[1].match(/[\/\[\]\\\{\}]/g) || page[2].match(/[\/\[\]\\\{\}]/g)) {
+            if (page[1].match(/[\/\[\]\\\{\}]\#$/g) || page[2].match(/[\/\[\]\\\{\}]\#$/g)) {
                 console.log(false);
                 $("#loading").addClass("hidden");
                 $("#error404").removeClass("hidden");
