@@ -61,7 +61,7 @@
             </div>
             <div id="reserved" class="hideable hidden">
                 <h1>Success! You have confirmed you can attend <span id="reserved-portion"></span> of the event</h1>
-                <p>Your confirmation has been recorded.<br><a class="show-main">Edit your response.</a></p>
+                <p>Your confirmation has been recorded.<br><a class="edit-response">Edit your response.</a></p>
             </div>
 
         </div>
@@ -89,6 +89,12 @@
             $(".hideable").addClass("hidden");
             $("#main").removeClass("hidden");
         });
+        $(".edit-response").click(function() {
+            $("#error").addClass("hidden");
+            $(".hideable").addClass("hidden");
+            $("#main").removeClass("hidden");
+            $("#reserved").removeClass("hidden");
+        })
 
         function confirm(portion, eventName, tokenName, token) {
             console.log(eventName);
