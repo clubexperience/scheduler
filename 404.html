@@ -99,7 +99,7 @@
                 token: tokenName,
                 status: portion
             }).then(function() {
-                firebase.database().ref("cescheduler/" + eventName + "/tokens/" + tokenName + "/reserved").set(true);
+                firebase.database().ref("cescheduler/" + eventName + "/tokens/" + tokenName + "/registered/").set(true);
                 $("#loading").addClass("hidden");
                 if (portion === "full") {
                     $("#reserved-portion").html("all");
