@@ -88,8 +88,9 @@
         });
 
         function confirm(portion, eventName, tokenName, token) {
+            console.log(eventName);
             console.log(tokenName);
-            firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + tokenName + "/").set({
+            firebase.database().ref("cescheduler/" + eventName + "/confirmations/" + tokenName + "/").set({
                 name: token.name,
                 token: tokenName,
                 status: portion
