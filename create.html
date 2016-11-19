@@ -64,9 +64,9 @@
     <script>
         /* global firebase $ */
         function allFilled() {
-            return ($("#title").val().replace(" ", "") === "" && $("#description").replace(" ", "").val() === "" && 
-            $("#date").replace(" ", "").val() === "" && $("#time").replace(" ", "").val() === "" && 
-            $("#type").replace(" ", "").val() === "");
+            return ($("#title").val().replace(" ", "") === "" && $("#description").val().replace(" ", "") === "" && 
+            $("#date").val().replace(" ", "") === "" && $("#time").val().replace(" ", "") === "" && 
+            $("#type").val().replace(" ", "") === "");
         }
         $("#submit").click(function() {
             if (!allFilled()) {
