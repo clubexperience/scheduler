@@ -90,11 +90,13 @@
         function confirm(portion, eventName, tokenName, token) {
             console.log(eventName);
             console.log(tokenName);
+            
             firebase.database().ref("cescheduler/" + eventName + "/confirmations/" + tokenName + "/").set({
                 name: token.name,
                 token: tokenName,
                 status: portion
             }).then(function() {
+                firebase.database().ref("cescheduler/" + eventName + "/tokens/" + tokenName + "/reserved").set(true);
                 $("#loading").addClass("hidden");
                 if (portion === "full") {
                     $("#reserved-portion").html("all");
