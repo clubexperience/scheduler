@@ -87,9 +87,9 @@
             $("#main").removeClass("hidden");
         });
 
-        function confirm(portion, tokenName, token) {
+        function confirm(portion, eventName, tokenName, token) {
             console.log(tokenName);
-            firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + token + "/").set({
+            firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + tokenName + "/").set({
                 name: token.name,
                 token: tokenName,
                 status: portion
@@ -109,7 +109,7 @@
             });
         }
 
-        function showConfirm(portion, tokenName, token) {
+        function showConfirm(portion, eventName, tokenName, token) {
             $("#main").addClass("hidden");
             $("#confirm").removeClass("hidden");
             $("#confirm-cancel-button").click(function() {
@@ -173,13 +173,13 @@
 
 
                         $("#attend-full").click(function() {
-                            showConfirm("full", page[2], data.tokens[page[2]]);
+                            showConfirm("full", page[1], page[2], data.tokens[page[2]]);
                         });
                         $("#attend-part").click(function() {
-                            showConfirm("part", page[2], data.tokens[page[2]]);
+                            showConfirm("part", page[1], page[2], data.tokens[page[2]]);
                         });
                         $("#attend-none").click(function() {
-                            showConfirm("none", page[2], data.tokens[page[2]]);
+                            showConfirm("none", page[1], page[2], data.tokens[page[2]]);
                         });
                         $("#loading").addClass("hidden");
                         $("#main").removeClass("hidden");
