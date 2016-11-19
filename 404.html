@@ -42,9 +42,10 @@
             <div id="confirm" class="hideable hidden">
                 <h1>Are you sure?</h1>
                 <p>You are confirming that you can attend <span id="portion"></span> of the event.</p>
-                <button class="btn-primary" id="confirm-cancel-button">No, Go back</button>
+                <br>
+                <button class="btn-primary form-control" id="confirm-cancel-button">No, Go back</button>
                 <hr>
-                <button class="btn-danger" id="condirm-confirm-button">Yes, I am sure</button>
+                <button class="btn-danger form-control" id="condirm-confirm-button">Yes, I am sure</button>
                 
             </div>
             <div id="error404" class="hideable hidden">
@@ -106,6 +107,7 @@
         }
 
         function showConfirm(portion, tokenName, token) {
+            $("#main").addClass("hidden");
             $("#confirm").removeClass("hidden");
             $("#confirm-cancel-button").click(function(){
                 $("#confirm").addClass("hidden");
