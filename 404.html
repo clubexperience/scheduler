@@ -88,7 +88,6 @@
         });
 
         function confirm(portion, tokenName, token) {
-            console.log(tokenName);
             firebase.database().ref("cescheduler/" + tokenName + "/confirmations/" + token + "/").set({
                 name: token.name,
                 token: tokenName,
@@ -117,7 +116,7 @@
                 $("#main").removeClass("hidden");
             });
             $("#confirm-confirm-button").click(function() {
-                confirm(portion, token);
+                confirm(portion, tokenName, token);
                 $("#confirm").addClass("hidden");
                 $("#loading").removeClass("hidden");
 
