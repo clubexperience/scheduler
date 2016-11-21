@@ -57,37 +57,20 @@
             </div>
             <div id="confirmations" class="hideable hidden">
                 <h1>Confirmations for: <span class="event-name"></span></h1>
-                <p class="text-muted">Everyone who choose a result will be displayed below. Only their latest applicable revision
-                (if they went back and changed their choice) will be shown. <a href=".">Click here to refresh(or reload this page)</a>.</p>
+                <p class="text-muted">Everyone who choose a result will be displayed below. Only their latest applicable revision (if they went back and changed their choice) will be shown. <a href=".">Click here to refresh(or reload this page)</a>.</p>
                 <hr>
                 <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Confirmation Status</th>
-       
-      </tr>
-    </thead>
-    <tbody>
-      
-      <tr class="success">
-        <td>Success</td>
-        <td>Doe</td>
-        
-      </tr>
-      <tr class="danger">
-        <td>Danger</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr class="info">
-        <td>Info</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-      
-    </tbody>
-  </table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Confirmation Status</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="confirmation-list">
+
+                    </tbody>
+                </table>
             </div>
             <div id="error" class="hideable hidden">
                 <h1>Unknown Error Occured</h1>
@@ -192,8 +175,10 @@
                     else if (!data.open) {
                         $("#loading").addClass("hidden");
                         $("#closed").removeClass("hidden");
-                    } else if (page[2] === "confirmations") {
-                        firebase.database().ref("cescheduler/" + page[1] + "/confirmations/").once("value", function(snapshot){
+                    }
+                    else if (page[2] === "confirmations") {
+                        firebase.database().ref("cescheduler/" + page[1] + "/confirmations/").once("value", function(snapshot) {
+
                             var data = snapshot.val();
                             for (var key in data) {
                                 //property is from prototype
@@ -208,10 +193,12 @@
                                 if (element.status === "none") {
                                     color = "danger";
                                     portion = "Unable to come";
-                                } else if (element.status === "part") {
+                                }
+                                else if (element.status === "part") {
                                     color = "info";
                                     portion = "Able to come to part of the event";
-                                } else {//element.status = full
+                                }
+                                else { //element.status = full
                                     color = "success";
                                     portion = "Able to come to the full event";
                                 }
@@ -219,8 +206,9 @@
                             }
                         });
                         $(".event-name").html(data.name);
+                        $("#loading").addClass("hidden");
                         $("#confirmations").removeClass("hidden");
-                        
+
                     }
                     else if (data.tokens[page[2]]) {
                         //console.log(data);
