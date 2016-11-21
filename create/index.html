@@ -63,6 +63,10 @@
     </script>
     <script>
         /* global firebase $ */
+        String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
         function allFilled() {
             return ($("#title").val().replace(" ", "") === "" && $("#description").val().replace(" ", "") === "" &&
                 $("#date").val().replace(" ", "") === "" && $("#time").val().replace(" ", "") === "" &&
@@ -74,7 +78,7 @@
                 var key = firebase.database().ref("/cescheduler/").push().key;
                 firebase.database().ref("/cescheduler/" + key).set({
                     name: $("#title").val(),
-                    description: $("#description").val(),
+                    description: $("#description").val().replace("/n", "<br>"),
                     info: {
                         date: $("#date").val(),
                         time: $("#time").val(),
