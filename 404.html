@@ -57,7 +57,7 @@
             </div>
             <div id="confirmations" class="hideable hidden">
                 <h1>Confirmations for: <span class="event-name"></span></h1>
-                <p class="text-muted">Everyone who choose a result will be displayed below. Only their latest applicable revision (if they went back and changed their choice) will be shown. <a href=".">Click here to refresh(or reload this page)</a>.</p>
+                <p class="text-muted">Everyone who choose a result will be displayed below. Only their latest applicable revision (if they went back and changed their choice) will be shown. Results shown in real time(No need to refresh).</p>
                 <hr>
                 <table class="table table-hover">
                     <thead>
@@ -177,9 +177,10 @@
                         $("#closed").removeClass("hidden");
                     }
                     else if (page[2] === "confirmations") {
-                        firebase.database().ref("cescheduler/" + page[1] + "/confirmations/").once("value", function(snapshot) {
+                        firebase.database().ref("cescheduler/" + page[1] + "/confirmations/").on("value", function(snapshot) {
 
                             var data = snapshot.val();
+                            $("#confirmation-list").html("");
                             for (var key in data) {
                                 //property is from prototype
                                 if (!data.hasOwnProperty(key)) continue;
@@ -202,6 +203,7 @@
                                     color = "success";
                                     portion = "Able to come to the full event";
                                 }
+                                
                                 $("#confirmation-list").append("<tr class='" + color + "'><td>" + name + "</td><td>" + portion + "</td></tr>");
                             }
                         });
