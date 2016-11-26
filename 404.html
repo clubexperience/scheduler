@@ -143,7 +143,7 @@
                 else {
                     $("#portion").html(portion);
                 }
-                window.location.hash = "success-" + portion;
+
                 $("#reserved").removeClass("hidden");
             }).catch(function() {
                 $("#loading").addClass("hidden");
@@ -154,7 +154,7 @@
 
 
         function showConfirm(portion, eventName, tokenName, token) {
-            window.location.hash = "confirm-" + portion;
+
             $("#main").addClass("hidden");
             $("#confirm").removeClass("hidden");
             $("#confirm-cancel-button").click(function() {
@@ -235,73 +235,46 @@
 
                     }
                     else if (data.tokens[page[2]]) {
-                        //check hash
-                        if (window.location.hash !== null && window.location.hash !== "" && window.location.hash !== "#") {
-                            var hash = window.location.hash.split("-");
-                            if (hash[0] === "confirm" && (hash[1] === "full" || hash[1] === "part" || hash[1] === "none")) {
-                                $(".hideable").removeClass("hidden");
 
-                                showConfirm(hash[1], page[1], page[2], data.tokens[page[2]]);
-                            }
-                            else if (hash[0] === "success" && (hash[1] === "full" || hash[1] === "part" || hash[1] === "none")) {
-                                $(".hideable").removeClass("hidden");
-                                if (hash[1] === "full") {
-                                    $("#portion").html("all");
-                                }
-                                else {
-                                    $("#portion").html(hash[1]);
-                                }
-
-                                $("#reserved").removeClass("hidden");
-                            } else {
-                                showMain()
-                            }
-
+                        //console.log(data);
+                        $(".event-name").html(data.name);
+                        $(".event-description").html(data.description);
+                        $(".token-owner-name").html(data.tokens[page[2]].name);
+                        console.log(!!data.tokens[page[2]].registered);
+                        if (!!data.tokens[page[2]].registered) {
+                            $("#already-registered").removeClass("hidden");
+                        }
+                        var info = data.info;
+                        if (info === null) {
+                            $("#info-table").addClass("hidden");
+                            $("#no-info").removeClass("hidden");
                         }
                         else {
-                            showMain()
-                            
+                            for (var key in info) {
+                                //property is from prototype
+                                if (!info.hasOwnProperty(key)) continue;
+
+                                var element = info[key];
+                                $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
+                            }
                         }
-                        function showMain() {
-                            //console.log(data);
-                            $(".event-name").html(data.name);
-                            $(".event-description").html(data.description);
-                            $(".token-owner-name").html(data.tokens[page[2]].name);
-                            console.log(!!data.tokens[page[2]].registered);
-                            if (!!data.tokens[page[2]].registered) {
-                                $("#already-registered").removeClass("hidden");
-                            }
-                            var info = data.info;
-                            if (info === null) {
-                                $("#info-table").addClass("hidden");
-                                $("#no-info").removeClass("hidden");
-                            }
-                            else {
-                                for (var key in info) {
-                                    //property is from prototype
-                                    if (!info.hasOwnProperty(key)) continue;
-
-                                    var element = info[key];
-                                    $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
-                                }
-                            }
 
 
-                            $("#attend-full").click(function() {
-                                showConfirm("full", page[1], page[2], data.tokens[page[2]]);
-                            });
-                            $("#attend-part").click(function() {
-                                showConfirm("part", page[1], page[2], data.tokens[page[2]]);
-                            });
-                            $("#attend-none").click(function() {
-                                showConfirm("none", page[1], page[2], data.tokens[page[2]]);
-                            });
-                            $(".view-confirmations").click(function() {
-                                window.location.href = "https://scheduler.clubexp.tk/event/" + page[1] + "/confirmations/?ref=" + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
-                            });
-                            $("#loading").addClass("hidden");
-                            $("#main").removeClass("hidden");
-                        }
+                        $("#attend-full").click(function() {
+                            showConfirm("full", page[1], page[2], data.tokens[page[2]]);
+                        });
+                        $("#attend-part").click(function() {
+                            showConfirm("part", page[1], page[2], data.tokens[page[2]]);
+                        });
+                        $("#attend-none").click(function() {
+                            showConfirm("none", page[1], page[2], data.tokens[page[2]]);
+                        });
+                        $(".view-confirmations").click(function() {
+                            window.location.href = "https://scheduler.clubexp.tk/event/" + page[1] + "/confirmations/?ref=" + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+                        });
+                        $("#loading").addClass("hidden");
+                        $("#main").removeClass("hidden");
+
                     }
                     else {
                         $("#loading").addClass("hidden");
