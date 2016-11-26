@@ -238,15 +238,12 @@
                         //check hash
                         if (window.location.hash !== null && window.location.hash !== "" && window.location.hash !== "#") {
                             var hash = window.location.hash.split("-");
-                            if (hash[0] === null || hash[0] === "" || hash[1] === null || hash[1] === "") {
-                                return false;
-                            }
-                            else if (hash[0] === "confirm") {
+                            if (hash[0] === "confirm" && (hash[1] === "full" || hash[1] === "part" || hash[1] === "none")) {
                                 $(".hideable").removeClass("hidden");
 
                                 showConfirm(hash[1], page[1], page[2], data.tokens[page[2]]);
                             }
-                            else if (hash[0] === "success") {
+                            else if (hash[0] === "success" && (hash[1] === "full" || hash[1] === "part" || hash[1] === "none")) {
                                 $(".hideable").removeClass("hidden");
                                 if (hash[1] === "full") {
                                     $("#portion").html("all");
