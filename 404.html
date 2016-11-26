@@ -43,7 +43,7 @@
             </div>
             <div id="confirm" class="hideable hidden">
                 <h1>Are you sure?</h1>
-                <p>You are confirming that you can attend <span id="portion"></span> of the event.<br><b>This will override all
+                <p>You are confirming that you can attend <b id="portion"></b> of the event.<br><b>This will override all
                 previous confirmations by you for this event.</b></p>
                 <br>
                 <button class="btn btn-primary form-control" id="confirm-cancel-button">No, Go back</button>
@@ -138,10 +138,10 @@ function getQuery(name) {
                 firebase.database().ref("cescheduler/" + eventName + "/tokens/" + tokenName + "/registered/").set(true);
                 $("#loading").addClass("hidden");
                 if (portion === "full") {
-                    $("#reserved-portion").html("all");
+                    $("#portion").html("all");
                 }
                 else {
-                    $("#reserved-portion").html(portion);
+                    $("#portion").html(portion);
                 }
 
                 $("#reserved").removeClass("hidden");
