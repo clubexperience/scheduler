@@ -253,48 +253,55 @@
                                 }
 
                                 $("#reserved").removeClass("hidden");
+                            } else {
+                                showMain()
                             }
 
-                        }
-                        //console.log(data);
-                        $(".event-name").html(data.name);
-                        $(".event-description").html(data.description);
-                        $(".token-owner-name").html(data.tokens[page[2]].name);
-                        console.log(!!data.tokens[page[2]].registered);
-                        if (!!data.tokens[page[2]].registered) {
-                            $("#already-registered").removeClass("hidden");
-                        }
-                        var info = data.info;
-                        if (info === null) {
-                            $("#info-table").addClass("hidden");
-                            $("#no-info").removeClass("hidden");
                         }
                         else {
-                            for (var key in info) {
-                                //property is from prototype
-                                if (!info.hasOwnProperty(key)) continue;
-
-                                var element = info[key];
-                                $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
-                            }
+                            showMain()
+                            
                         }
+                        function showMain() {
+                            //console.log(data);
+                            $(".event-name").html(data.name);
+                            $(".event-description").html(data.description);
+                            $(".token-owner-name").html(data.tokens[page[2]].name);
+                            console.log(!!data.tokens[page[2]].registered);
+                            if (!!data.tokens[page[2]].registered) {
+                                $("#already-registered").removeClass("hidden");
+                            }
+                            var info = data.info;
+                            if (info === null) {
+                                $("#info-table").addClass("hidden");
+                                $("#no-info").removeClass("hidden");
+                            }
+                            else {
+                                for (var key in info) {
+                                    //property is from prototype
+                                    if (!info.hasOwnProperty(key)) continue;
+
+                                    var element = info[key];
+                                    $("#info-body").append("<tr><td>" + key + "</td><td>" + element + "</td></tr>");
+                                }
+                            }
 
 
-                        $("#attend-full").click(function() {
-                            showConfirm("full", page[1], page[2], data.tokens[page[2]]);
-                        });
-                        $("#attend-part").click(function() {
-                            showConfirm("part", page[1], page[2], data.tokens[page[2]]);
-                        });
-                        $("#attend-none").click(function() {
-                            showConfirm("none", page[1], page[2], data.tokens[page[2]]);
-                        });
-                        $(".view-confirmations").click(function() {
-                            window.location.href = "https://scheduler.clubexp.tk/event/" + page[1] + "/confirmations/?ref=" + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
-                        });
-                        $("#loading").addClass("hidden");
-                        $("#main").removeClass("hidden");
-
+                            $("#attend-full").click(function() {
+                                showConfirm("full", page[1], page[2], data.tokens[page[2]]);
+                            });
+                            $("#attend-part").click(function() {
+                                showConfirm("part", page[1], page[2], data.tokens[page[2]]);
+                            });
+                            $("#attend-none").click(function() {
+                                showConfirm("none", page[1], page[2], data.tokens[page[2]]);
+                            });
+                            $(".view-confirmations").click(function() {
+                                window.location.href = "https://scheduler.clubexp.tk/event/" + page[1] + "/confirmations/?ref=" + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+                            });
+                            $("#loading").addClass("hidden");
+                            $("#main").removeClass("hidden");
+                        }
                     }
                     else {
                         $("#loading").addClass("hidden");
