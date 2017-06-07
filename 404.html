@@ -134,13 +134,18 @@
                 token: tokenName,
                 status: portion
             }).then(function() {
+                 console.log(1)
                 firebase.database().ref("/scheduler/" + eventName + "/tokens/" + tokenName + "/registered/").set(true);
                 $("#loading").addClass("hidden");
+                console.log(2)
                 if (portion === "full") {
-                    $("#portion").html("all");
+                    console.log(portion)
+                    $("#portion").text("all");
+                    console.log(3)
                 }
+                
                 else {
-                    $("#portion").html(portion);
+                    $("#portion").text(portion);
                 }
 
                 $("#reserved").removeClass("hidden");
@@ -224,7 +229,7 @@
                         });
                         if (getQuery("ref") !== null && getQuery("ref") !== "") {
                             $("#back").click(function() {
-                                window.location.href = "https://scheduler.clubexp.tk" + getQuery("ref");
+                                window.location.href = "https://clubexp.jeffkmeng.com/scheduler/" + getQuery("ref");
                             });
                             $("#back").removeClass("hidden");
                         }
@@ -269,7 +274,7 @@
                             showConfirm("none", page[1], page[2], data.tokens[page[2]]);
                         });
                         $(".view-confirmations").click(function() {
-                            window.location.href = "https://scheduler.clubexp.tk/event/" + page[1] + "/confirmations/?ref=" + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+                            window.location.href = "/scheduler/event/" + page[1] + "/confirmations/?ref=" + encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
                         });
                         $("#loading").addClass("hidden");
                         $("#main").removeClass("hidden");
