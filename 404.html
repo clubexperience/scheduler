@@ -87,19 +87,18 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
-    <script>
-        /* global firebase */
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyDSCVcPcMzCXMjGhQvQJfkgnjCFzzewTgA",
-            authDomain: "jmeng.firebaseapp.com",
-            databaseURL: "https://jmeng.firebaseio.com",
-            storageBucket: "project-4679594405675385181.appspot.com",
-            messagingSenderId: "590199481216"
-        };
-        firebase.initializeApp(config);
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC8FKiBTlcVLWfB6zNuLOivt7BE2mj5LKQ",
+    authDomain: "clubexp-e1e18.firebaseapp.com",
+    databaseURL: "https://clubexp-e1e18.firebaseio.com",
+    storageBucket: "clubexp-e1e18.appspot.com",
+    messagingSenderId: "398239624697"
+  };
+  firebase.initializeApp(config);
+</script>
     <script>
         /* global firebase $ */
 
@@ -130,12 +129,12 @@
             console.log(eventName);
             console.log(tokenName);
 
-            firebase.database().ref("cescheduler/" + eventName + "/confirmations/" + tokenName + "/").set({
+            firebase.database().ref("/scheduler/" + eventName + "/confirmations/" + tokenName + "/").set({
                 name: token.name,
                 token: tokenName,
                 status: portion
             }).then(function() {
-                firebase.database().ref("cescheduler/" + eventName + "/tokens/" + tokenName + "/registered/").set(true);
+                firebase.database().ref("/scheduler/" + eventName + "/tokens/" + tokenName + "/registered/").set(true);
                 $("#loading").addClass("hidden");
                 if (portion === "full") {
                     $("#portion").html("all");
@@ -182,7 +181,7 @@
             }
             else {
                 //console.log(2);
-                firebase.database().ref("cescheduler/" + page[1] + "/").once('value').then(function(snapshot) {
+                firebase.database().ref("/scheduler/" + page[1] + "/").once('value').then(function(snapshot) {
                     var data = snapshot.val();
                     if (data === null) {
                         $("#loading").addClass("hidden");
@@ -193,7 +192,7 @@
                         $("#closed").removeClass("hidden");
                     }
                     else if (page[2] === "confirmations") {
-                        firebase.database().ref("cescheduler/" + page[1] + "/confirmations/").on("value", function(snapshot) {
+                        firebase.database().ref("/scheduler/" + page[1] + "/confirmations/").on("value", function(snapshot) {
 
                             var data = snapshot.val();
                             $("#confirmation-list").html("");
